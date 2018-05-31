@@ -25,31 +25,30 @@ def consequ():
     print('Do you still want to continue?')
     print('M - to Main Menu')
     print('Q - to Quit the system')
-    s = raw_input('Please select your option : ')
+    s = input('Please select your option : ')
     s = s.upper()
     return s
 
 def selectdate(s):
-    ans = raw_input(' Would you like to select time?? please enter Y / N (default date is today) : ').upper()
+    ans = input(' Would you like to select time?? please enter Y / N (default date is today) : ').upper()
     if ans=='Y':
-        date = raw_input(' please input the date(format must like this \'2018-5-30\')')
+        date = input(' please input the date(format must like this \'2018-5-30\') : ')
         # check date
         datel = date.split('-')
         comdate = ''
-        for s in datel:
-            comdate += s
-        print comdate
+        for i in datel:
+            comdate += i
         try:
             comdate = int(comdate)
         except:
-            print('=== Invalidraw_input == = ')
-            date = raw_input('please input the date(format must like this \'2018-5-30\') : ')
+            print('=== Invalidinput == = ')
+            date = input('please input the date(format must like this \'2018-5-30\') : ')
         # select ferryId
         for t in timetable:
             print t,
         print
-        ferryId = raw_input(' please select the timetable (select the number: 1, 2, 3 so on..) : ')
-        dateFerry[date] = Ferry
+        ferryId = int(input(' please select the timetable (select the number: 1, 2, 3 so on..) : '))
+        dateFerry[date] = (([], []), ([], []), ([], []), ([], []), ([], []), ([], []), ([], []), ([], []))
         if s=='B':
             if len(dateFerry[date][ferryId - 1][0]) < 10:
 
@@ -82,12 +81,13 @@ def purchase(Ferry, BussinessList, EconomyList):
     print('B – to purchase ticket for Business class')
     print('E – to purchase ticket for Economy class')
     print('M – to return to Main Menu')
-    s = raw_input('Please select your option : ')
+    s = input('Please select your option : ')
     s = s.upper()
     # select date
     r = selectdate(s)
     if r=='success':
         s = consequ()
+
 
         if s == 'M':
             return 'continue'
@@ -95,64 +95,64 @@ def purchase(Ferry, BussinessList, EconomyList):
             print('You have already exited this system!')
             exit()
     else:
-        return 'fail'
-    # default date is now
-    # Assigning Seats
-    # Busseness
-    if s == 'B':
-        name = raw_input("Please enter your name : ")
-        try:
-            ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
-        except:
-            print('=== Invalid raw_input ===')
-            ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
 
-        if ferryId == '' or ferryId == None:
+        # default date is now
+        # Assigning Seats
+        # Busseness
+        if s == 'B':
+            name = input("Please enter your name : ")
             try:
-                ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+                ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
             except:
-                print('=== Invalid raw_input ===')
-                ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+                print('=== Invalid input ===')
+                ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
+
+            if ferryId == '' or ferryId == None:
+                try:
+                    ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
+                except:
+                    print('=== Invalid input ===')
+                    ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
 
 
-        if len(Ferry[ferryId - 1][0]) < 10:
+            if len(Ferry[ferryId - 1][0]) < 10:
 
-            Ferry[ferryId - 1][0].append(1)
+                Ferry[ferryId - 1][0].append(1)
 
-            personDetails = PersonDetails(name, 'bussiness', ferryId)
+                personDetails = PersonDetails(name, 'bussiness', ferryId)
 
-            BussinessList.append(personDetails)
-        else:
+                BussinessList.append(personDetails)
+            else:
 
-            print ('This ferry 00%d is full now!' % ferryId)
-            return 'continue'
+                print ('This ferry 00%d is full now!' % ferryId)
+                return 'continue'
 
-        s = consequ()
+            s = consequ()
 
-        if s == 'M':
-            return 'continue'
-        elif s == 'Q':
-            print('You have already exited this system!')
-            exit()
+            if s == 'M':
+                return 'continue'
+            elif s == 'Q':
+                print('You have already exited this system!')
+                exit()
 
         # Economy
         elif s == 'E':
 
-            name = raw_input("Please enter your name : ")
+            name = input("Please enter your name : ")
 
             try:
-                ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+                ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
             except:
-                print('=== Invalid raw_input ===')
-                ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+                print('=== Invalid input ===')
+                ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
 
             if ferryId == '' or ferryId == None:
 
                 try:
-                    ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+                    ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
                 except:
-                    print('=== Invalid raw_input ===')
-                    ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+                    print('=== Invalid input ===')
+                    ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
 
             if len(Ferry[ferryId - 1][1]) < 40:
 
@@ -182,18 +182,18 @@ def view(Ferry, BussinessList, EconomyList):
     print('F - to select Ferry ID ')
     print('T - to select Trip Time')
     print('M - to Main Menu')
-    s = raw_input('Please select your choice : ')
+    s = input('Please select your choice : ')
     s = s.upper()
     if s == 'F':
         try:
 
-            ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+            ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
             date = datetime.datetime.now().strftime('%Y-%m-%d')
 
         except:
 
-            print('=== Invalid raw_input ===')
-            ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+            print('=== Invalid input ===')
+            ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
 
     elif s == 'M':
         return 'continue'
@@ -201,25 +201,27 @@ def view(Ferry, BussinessList, EconomyList):
     elif s == 'T':
         try:
 
-            ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
+            print 'the date list : ',
             for k in dateFerry:
-                print k
-            date = raw_input('please input the date you want to select (the format must be the same as given) : ')
+                print k,
+            print
+            date = input('please input the date you want to select (the format must be the same as given) : ')
+
+            ferryId = int(input("Please select your FerryId (range from 1 to 8) : "))
 
         except:
 
-            print('=== Invalid raw_input ===')
-            ferryId = int(raw_input("Please select your FerryId (range from 1 to 8) : "))
-            date = raw_input('please input the date you want to select (the format must be the same as given) : ')
+            print('=== Invalid input ===')
+            return
 
     else:
         print('=== Invalid input ===')
-        s = raw_input('Please select your choice : ')
+        s = input('Please select your choice : ')
         return
 
-    # TIME problem remained
+
     print ('********************************************************************')
-    print ('*         Ferry ID : 00%d           Date : %s               *' % (ferryId, date))
+    print ('*         Ferry ID : 00%d           Date : %s                *' % (ferryId, date))
     print ('********************************************************************')
     print ('*         Bussiness CLASS                                          *')
     # Algorithm 1 : bussiness seat
@@ -278,7 +280,7 @@ if __name__ == '__main__':
         print ('P – to Purchase Ticket')
         print ('V – to View Seating Arrangement')
         print ('Q – to Quit the system')
-        s = raw_input('Please select your option : ')
+        s = input('Please select your option : ')
         s = s.upper()
         if s == 'P':
             purchase(Ferry, BussinessList, EconomyList)
@@ -288,8 +290,8 @@ if __name__ == '__main__':
             exit_sys()
             break
         else:
-            print('=== Invalid raw_input ===')
-            s = raw_input('Please select your option : ')
+            print('=== Invalid input ===')
+            s = input('Please select your option : ')
             s = s.upper()
             if s == 'P':
                 purchase(Ferry, BussinessList, EconomyList)
