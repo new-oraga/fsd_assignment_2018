@@ -33,38 +33,89 @@ def consequ():
     s = s.upper()
     return s
 
-def addition(s,dateFerry,date,ferryId,name):
+
+def addition(s, dateFerry, date, ferryId, name, number):
     if s == 'B':
         if len(dateFerry[date][ferryId - 1][0]) < 10:
 
-            dateFerry[date][ferryId - 1][0].append(1)
+            # judgement
+            nnow = len(dateFerry[date][ferryId - 1][0])
+            if number > 10:
+                print ' ' * 10, '* please buy the tickets no more than 10 '
+                return
+            if (nnow + number) > 10 and number <= 10:
+                print ' ' * 10, '* the seat is full now, please buy tickets no more than %d ' % (10 - nnow)
+                print ' ' * 10,
+                number = raw_input('* please input the number of tickets you want to buy : ')
+                print
+            try:
+                number = int(number)
+            except:
+                print ' ' * 10, '=== Invalid input === '
+                print
+                return
 
-            p = PersonDetails( name, 'Bussiness', ferryId,date)
+            for n in range(number):
+                dateFerry[date][ferryId - 1][0].append(1)
 
-            BussinessList.append(p)
+            p = PersonDetails(name, 'Bussiness', ferryId, date, number)
+
+            flag = 0
+            for k in BussinessList:
+                if k.name == name and k.type == 'Bussiness' and k.ferryId == ferryId and k.date == date:
+                    k.number = k.number + number
+                    flag = 1
+            if flag == 0:
+                BussinessList.append(p)
 
             return 'success'
 
         else:
 
-            print ' ' * 10, ('This ferry 00 % d is full now!' % ferryId)
+            print ' ' * 10, ('This ferry 00%d is full now!' % ferryId)
 
             return 'fail'
     elif s == 'E':
         if len(dateFerry[date][ferryId - 1][1]) < 40:
 
-            dateFerry[date][ferryId - 1][1].append(1)
+            # judgement
+            nnow = len(dateFerry[date][ferryId - 1][1])
+            if number > 40:
+                print ' ' * 10, '* please buy the tickets no more than 40 '
+                return
+            if (nnow + number) > 40 and number <= 40:
+                print ' ' * 10, '* the seat is full now, please buy tickets no more than %d ' % (40 - nnow)
+                print ' ' * 10,
+                number = raw_input('* please input the number of tickets you want to buy : ')
+                print
 
-            p = PersonDetails(name, 'Ecomomy', ferryId, date)
+            try:
+                number = int(number)
+            except:
+                print ' ' * 10, '=== Invalid input === '
+                print
+                return
 
-            EconomyList.append(p)
+            for i in range(number):
+                dateFerry[date][ferryId - 1][1].append(1)
+
+            p = PersonDetails(name, 'Ecomomy', ferryId, date, number)
+
+            flag = 0
+            for k in EconomyList:
+                if k.name == name and k.type == 'Ecomomy' and k.ferryId == ferryId and k.date == date:
+                    k.number = k.number + number
+                    flag = 1
+            if flag == 0:
+                EconomyList.append(p)
 
             return 'success'
 
         else:
 
-            print (' ' * 10, 'This ferry 00%d is full now!' % ferryId)
+            print ' ' * 10, 'This ferry 00%d is full now!' % ferryId
             return 'fail'
+
 
 def selectdate(s):
     print ' ' * 10,
@@ -91,17 +142,27 @@ def selectdate(s):
     print ' ' * 10,
     name = raw_input(' please input your name : ')
     print
+    print ' ' * 10,
+    number = raw_input(' please input the number of tickets you want to buy : ')
+    print
+    try:
+        number = int(number)
+    except:
+        print ' ' * 10, '=== Invalid input === '
+        print
+        return
+
     # same date same ferry id addition problem // solved
     sdate = ''
     for k in dateFerry:
         if date == k:
             sdate = date
-    if sdate==date:
-        r = addition(s,dateFerry,date,ferryId,name)
+    if sdate == date:
+        r = addition(s, dateFerry, date, ferryId, name, number)
         return r
     else:
         dateFerry[date] = (([], []), ([], []), ([], []), ([], []), ([], []), ([], []), ([], []), ([], []))
-        r = addition(s,dateFerry,date,ferryId,name)
+        r = addition(s, dateFerry, date, ferryId, name, number)
         return r
 
 
@@ -113,7 +174,7 @@ def purchase(BussinessList, EconomyList):
     print
     s = s.upper()
     # select date
-    if s=='B' or s=='E':
+    if s == 'B' or s == 'E':
         r = selectdate(s)
         if r == 'success':
             # print all person details
@@ -127,11 +188,13 @@ def purchase(BussinessList, EconomyList):
             else:
                 print ' ' * 10, '=== Invalid input ==='
                 print
-                pass
+                return
+    elif s == 'M':
+        return 'continue'
     else:
         print ' ' * 10, '=== Invalid input ==='
         print
-        pass
+        return
 
 
 # Submenu View Seating Arrangement
@@ -150,10 +213,10 @@ def view(BussinessList, EconomyList):
             print  ' ' * 10, '*' * 108
             print ' ' * 10, '* the date list : ',
             for k in dateFerry:
-                print '*',k,
+                print '*', k,
             print
             print  ' ' * 10, '*' * 108
-            print ' ' * 10,'*',
+            print ' ' * 10, '*',
             date = raw_input(' Please input the date you want to select (the format must be the same as given) : ')
             print
 
@@ -170,12 +233,9 @@ def view(BussinessList, EconomyList):
     else:
         print ' ' * 10, '=== Invalid input ==='
         print
-        print ' ' * 10,
-        s = raw_input('Please select your choice : ')
-        print
         return
 
-    #print
+    # print
     print ' ' * 10,
     print ('********************************************************************')
     print ' ' * 10,
@@ -199,7 +259,7 @@ def view(BussinessList, EconomyList):
     for i in range(10):
         if i == 5:
             print
-            print ' ' * 10,'* ',
+            print ' ' * 10, '* ',
         print printList[i], ' * ',
     print
 
@@ -224,12 +284,13 @@ def view(BussinessList, EconomyList):
     for i in range(40):
         if i == 5 or i == 10 or i == 15 or i == 20 or i == 25 or i == 30 or i == 35:
             print
-            print ' ' * 10,'* ',
+            print ' ' * 10, '* ',
         print printList[i], ' * ',
     print
     print
 
     del printList[:]
+
 
 def pmian():
     print  ' ' * 10, '*' * 36
@@ -240,6 +301,7 @@ def pmian():
     print  ' ' * 10, '* please select your option        *'
     print  ' ' * 10, '*' * 36
 
+
 def ppurchase():
     print  ' ' * 10, '*' * 45
     print ' ' * 10, '* PURCHASING MODULE                         *'
@@ -248,6 +310,7 @@ def ppurchase():
     print ' ' * 10, '* M – to return to Main Menu                *'
     print  ' ' * 10, '*' * 45
 
+
 def pview():
     print  ' ' * 10, '*' * 30
     print ' ' * 10, '* SEATING ARRANGEMENT MODULE *'
@@ -255,40 +318,46 @@ def pview():
     print ' ' * 10, '* M - to Main Menu           *'
     print  ' ' * 10, '*' * 30
 
+
 def ptrapezium():
     l = [10, 12, 14]
     for i in l:
-        print ' '*10,' ' * (10 - (i - 10) / 2), '*' * i
-        #time.sleep(0.3)
+        print ' ' * 10, ' ' * (10 - (i - 10) / 2), '*' * i
+        # time.sleep(0.3)
     l1 = [28, 26, 24, 22]
     for i in l1:
-        print ' '*10,' ' * (10 - (i - 10) / 2), '*' * i
+        print ' ' * 10, ' ' * (10 - (i - 10) / 2), '*' * i
         time.sleep(0.3)
+
+
 def ptimetable():
-    print  ' ' * 10, '*' *108
+    print  ' ' * 10, '*' * 108
     print ' ' * 10,
     for t in timetable:
-        print t,'*',
+        print t, '*',
     print
-    print  ' ' * 10, '*' *108
+    print  ' ' * 10, '*' * 108
     print
 
-def pAllpersondetails(s,BussinessList,EconomyList):
+
+def pAllpersondetails(s, BussinessList, EconomyList):
     print
     print  ' ' * 10, '*' * 52
-    if s=='B':
+    if s == 'B':
         for b in BussinessList:
-            print  ' ' * 10,'* ','Name: ', b.name
+            print  ' ' * 10, '* ', 'Name: ', b.name
             print  ' ' * 10, '* ', 'SeatType: ', b.type
             print  ' ' * 10, '* ', 'FerryId: ', b.ferryId
             print  ' ' * 10, '* ', 'Fate: ', b.date
+            print  ' ' * 10, '* ', 'TicketsNumber: ', b.number
             print
-    elif s=='E':
+    elif s == 'E':
         for e in EconomyList:
             print  ' ' * 10, '* ', 'Name: ', e.name
             print  ' ' * 10, '* ', 'SeatType: ', e.type
             print  ' ' * 10, '* ', 'FerryId: ', e.ferryId
             print  ' ' * 10, '* ', 'Fate: ', e.date
+            print  ' ' * 10, '* ', 'TicketsNumber: ', e.number
             print
     print  ' ' * 10, '*' * 52
     print
