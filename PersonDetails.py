@@ -4,8 +4,8 @@ from Person import Person
 
 
 class PersonDetails():
-    def __init__(self, name, type , ferryId):
+    def __init__(self, name, type , ferryId,date):
         self.name = name
         self.type = type
         self.ferryId = ferryId
-        self.time = time.strftime('%d %b %Y', time.localtime(time.time()))
+        self.date = date
