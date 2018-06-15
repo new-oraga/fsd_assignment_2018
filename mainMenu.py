@@ -212,8 +212,16 @@ def view(BussinessList, EconomyList):
         try:
             print  ' ' * 10, '*' * 108
             print ' ' * 10, '* the date list : ',
+            # print date list
+            cout = 0
             for k in dateFerry:
-                print '*', k,
+                cout+=1
+                if cout%6 ==0:
+                    print
+                    print ' ' * 10,
+                    print '*', k,
+                else:
+                    print '*', k,
             print
             print  ' ' * 10, '*' * 108
             print ' ' * 10, '*',
@@ -235,7 +243,7 @@ def view(BussinessList, EconomyList):
         print
         return
 
-    # print
+    # printing part
     print ' ' * 10,
     print ('********************************************************************')
     print ' ' * 10,
